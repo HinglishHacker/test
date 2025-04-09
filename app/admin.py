@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import TestBox, Test
 
-# Register your models here.
+admin.site.register(TestBox)
+
+admin.site.register(Test)
