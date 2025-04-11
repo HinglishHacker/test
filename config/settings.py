@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -57,14 +58,19 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+
+    # Добавляем middleware для django-allauth
+    "allauth.account.middleware.AccountMiddleware",  # Эту строку добавь
 ]
 
 ROOT_URLCONF = "config.urls"
-
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'app/templates'),
+            os.path.join(BASE_DIR, 'app/templates/app')  # Добавляем директорию с шаблонами post
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -145,8 +151,13 @@ SITE_ID = 1
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'login'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '7652463108-90daoac94ga60uf36qgo0dg929dlq2dj.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
 
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
+
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
+ACCOUNT_LOGIN_METHODS = ['email']
 SOCIALACCOUNT_QUERY_EMAIL = True
+
+SITE_ID = 1

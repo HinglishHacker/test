@@ -1,0 +1,13 @@
+<h2>Войти</h2>
+
+<a href="{% url 'socialaccount_login' 'google' %}">
+    <button>Войти через Google</button>
+</a>
+
+<hr>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Войти</button>
+</form>
